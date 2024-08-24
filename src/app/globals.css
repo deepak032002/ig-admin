@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .active-group-sidebar {
+    @apply bg-blue-100 text-primary dark:bg-blue-900;
+  }
+
+  .searchWrapper {
+    @apply border-stroke;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.no-scrollbar::-webkit-scrollbar-thumb {
+  width: 100%;
+  background-color: #636262;
+  border-radius: 4px;
+}
+
+.multiSelectContainer .highlightOption {
+  background: transparent;
+  color: black;
+}
+
+.multiSelectContainer .option.selected {
+  background: #b3b3b3;
+  color: white;
+}
+
+.multiSelectContainer li:hover {
+  background: #cccccc !important;
+}
