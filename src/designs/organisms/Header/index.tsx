@@ -47,9 +47,7 @@ const Header: React.FC<{
         </div>
 
         <div className="hidden items-center gap-4 xl:flex">
-          <ul className="flex items-center gap-2 2xsm:gap-4">
-            <DarkModeSwitcher />
-          </ul>
+          <DarkModeSwitcher />
           <DropdownUser />
         </div>
 
@@ -68,9 +66,7 @@ const Header: React.FC<{
           dropdownOpen && width <= 1280 ? 'h-[80px] border-t' : 'h-0'
         }`}
       >
-        <ul className="flex items-center gap-2 2xsm:gap-4">
-          <DarkModeSwitcher />
-        </ul>
+        <DarkModeSwitcher />
         <DropdownUser />
       </div>
     </header>

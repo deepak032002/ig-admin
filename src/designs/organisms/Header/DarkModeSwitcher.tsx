@@ -6,7 +6,7 @@ const DarkModeSwitcher = () => {
   const { setMode, mode } = useThemeMode()
 
   return (
-    <li>
+    <div>
       <label className={'group'}>
         <input
           className="top-0 z-50 m-0 hidden h-full w-full cursor-pointer"
@@ -19,11 +19,11 @@ const DarkModeSwitcher = () => {
           }}
         />
 
-        <span className="block h-13 w-13 rounded-full p-3 group-hover:bg-[#CCE5E5] group-hover:text-primary dark:group-hover:bg-[#66b0b23b]">
+        <span className="block h-13 w-13 rounded-full p-3 group-hover:bg-blue-100 group-hover:text-primary dark:group-hover:bg-blue-900">
           {mode === 'dark' ? <SunIcon /> : <MoonIcon />}
         </span>
       </label>
-    </li>
+    </div>
   )
 }
 
