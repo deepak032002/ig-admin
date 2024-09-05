@@ -12,3 +12,9 @@ type QueryType = {
   type?: string
   sortBy?: string
 }
+
+type ApiResponse<T> = {
+  message: string
+  success: boolean
+  result: T
+}

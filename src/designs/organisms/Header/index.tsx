@@ -62,8 +62,8 @@ const Header: React.FC<{
       </div>
 
       <div
-        className={`absolute left-0 top-[58px] flex w-full items-center justify-center overflow-hidden border-[#e0e6eb] bg-white transition-[height] dark:border-[#313e54] dark:bg-boxdark xl:border-t-0 ${
-          dropdownOpen && width <= 1280 ? 'h-[80px] border-t' : 'h-0'
+        className={`absolute left-0 top-[58px] flex w-full items-center justify-center gap-3 border-[#e0e6eb] bg-white transition-[height] dark:border-[#313e54] dark:bg-boxdark xl:border-t-0 ${
+          dropdownOpen && width <= 1280 ? 'h-[80px] border-t' : 'h-0 overflow-hidden'
         }`}
       >
         <DarkModeSwitcher />

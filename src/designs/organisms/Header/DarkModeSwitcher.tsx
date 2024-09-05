@@ -19,7 +19,7 @@ const DarkModeSwitcher = () => {
           }}
         />
 
-        <span className="block h-13 w-13 rounded-full p-3 group-hover:bg-blue-100 group-hover:text-primary dark:group-hover:bg-blue-900">
+        <span className="block h-10 w-10 rounded-full p-2 group-hover:bg-blue-100 group-hover:text-primary dark:group-hover:bg-blue-900">
           {mode === 'dark' ? <SunIcon /> : <MoonIcon />}
         </span>
       </label>

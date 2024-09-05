@@ -46,6 +46,30 @@ const routeGroups: AppRouteGroup = [
       },
     ],
   },
+
+  {
+    id: 2,
+    group: 'User Management',
+    icon: (
+      <>
+        <SidebarIcon.UserServiceIcon />
+      </>
+    ),
+    routes: [
+      {
+        title: 'Users List',
+        path: '/users-list',
+        icon: (
+          <>
+            <SidebarIcon.UserListIcon />
+          </>
+        ),
+        isHavechild: false,
+        key: 'users-list',
+        isShow: true,
+      },
+    ],
+  },
 ]
 
 export default routeGroups

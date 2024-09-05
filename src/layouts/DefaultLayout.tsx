@@ -1,14 +1,25 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Sidebar from '@/designs/organisms/Sidebar'
 import Header from '@/designs/organisms/Header'
 import useWindowDimensions from '@/hooks/useWindowDimensions'
+import { useUser } from '@/hooks/api-hooks/use-user'
+import { useGlobalStore } from '@/store/useGlobalStore'
 
 export default function DefaultLayout({ children }: { children: React.ReactNode }) {
   const { width } = useWindowDimensions()
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(width >= 1280 ? true : false)
+  const { data: user } = useUser()
+  const setUser = useGlobalStore(state => state.setUser)
+
+  useEffect(() => {
+    if (user) {
+      setUser(user.result)
+    }
+  }, [user, setUser])
+
   return (
     <div className="dark:bg-boxdark">
       <div className="flex h-screen overflow-hidden px-4 xl:px-0">

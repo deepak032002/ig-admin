@@ -6,6 +6,10 @@ class UserApiService {
   login = (email: string, password: string) => {
     return coreApiService.post('/api/login', { email, password }, { baseURL: '' })
   }
+
+  getProfile = () => {
+    return coreApiService.get<ApiResponse<UserResponse>>(API_ENDPOINTS.AUTH.PROFILE)
+  }
 }
 
 const userApiService = new UserApiService()

@@ -34,12 +34,12 @@ const GroupSidebar: React.FC<SidebarProps> = ({ activeGroup, sidebarOpen, handle
       <ul className="flex flex-col items-center gap-y-2">
         {routeGroups.map(group => {
           return (
-            <Tooltip content={group.group} key={group.id} placement="right">
+            <Tooltip className="whitespace-nowrap" content={group.group} key={group.id} placement="right">
               <li
                 className={`cursor-pointer rounded-xl p-3 ${
                   activeGroup === group.id
                     ? 'active-group-sidebar'
-                    : 'hover:bg-[#CCE5E5] hover:text-primary dark:hover:bg-[#66b0b23b]'
+                    : 'hover:bg-blue-100 hover:text-primary dark:hover:bg-blue-900'
                 }`}
                 onClick={() => handleRouteGroupClick(group.id)}
               >
