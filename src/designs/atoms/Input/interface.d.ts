@@ -1,14 +1,21 @@
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface Select extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  type: 'select'
+  options: { value: string; label: string }[]
+}
+
+interface Input extends React.InputHTMLAttributes<HTMLInputElement> {
+  type: Exclude<React.InputHTMLAttributes<HTMLInputElement>['type'], 'select'>
+}
+
+type InputProps = {
   label?: string
-  error?: string
   isIcon?: boolean
   icon?: ReactNode
   wrapperClassName?: string
   labelClassName?: string
   iconClassName?: string
   error?: string
-  type?: HTMLInputElement['type'] | 'select'
-  options?: { value: string; label: string }[]
   inputBorderRadius?: string
   inputWrapperClassName?: string
-}
+  layout: 'horizontal' | 'vertical'
+} & (Input | Select)

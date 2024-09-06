@@ -137,6 +137,8 @@ function Table<T>({
                 value={search}
                 wrapperClassName="w-full md:w-[300px] mb-0 h-full"
                 onChange={handleChange}
+                layout="horizontal"
+                type="text"
               />
             )}
           </div>

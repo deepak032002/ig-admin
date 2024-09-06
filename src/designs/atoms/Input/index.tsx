@@ -1,55 +1,80 @@
+'use client'
+
 import React, { useState } from 'react'
 import { VscEye, VscEyeClosed } from 'react-icons/vsc'
 
 import { cn } from '@/utils/helper'
 
-const Input: React.FC<InputProps> = ({
-  disabled,
-  label,
-  error,
-  isIcon,
-  icon,
-  className,
-  wrapperClassName,
-  labelClassName,
-  iconClassName,
-  inputBorderRadius = '8px',
-  inputWrapperClassName,
-  type,
-  ...props
-}) => {
+const isSelect = (props: Select | Input): props is Select => {
+  return props.type === 'select'
+}
+
+const Input: React.FC<InputProps> = props => {
   const inputClassName = cn(
     'w-full bg-transparent h-full text-[#000] border-0 outline-none focus:ring-0 focus:shadow-none dark:border-form-strokedark dark:text-white',
-    className,
-    { 'cursor-not-allowed': disabled }
+    props.className,
+    { 'cursor-not-allowed': props.disabled }
   )
 
   const [isShowPassword, setIsShowPassword] = useState<boolean>(false)
 
   return (
-    <div className={cn('mb-4', wrapperClassName)}>
-      <div className={error ? 'mb-1' : ''}>
-        {label && (
-          <label className={cn('mb-2.5 block font-medium text-[#3f2a2a] dark:text-white', labelClassName)}>
-            {label}
+    <div className={cn(props.wrapperClassName)}>
+      <div
+        className={
+          props.error
+            ? 'mb-1'
+            : cn(
+                'flex',
+                { 'flex-col gap-2': props.layout === 'vertical' },
+                {
+                  'flex-col gap-2 md:flex-row md:items-center': props.layout === 'horizontal',
+                }
+              )
+        }
+      >
+        {props.label && (
+          <label className={cn('block flex-1 font-medium text-[#3f2a2a] dark:text-white', props.labelClassName)}>
+            {props.label} {props.required && <span className="text-red-500">*</span>}
           </label>
         )}
+
         <div
           className={cn(
-            `flex h-10 items-center gap-2 border border-neutral-1000 px-2 dark:border-neutral-400`,
-            inputWrapperClassName
+            `flex h-10 flex-1 items-center gap-2 rounded-md border border-neutral-1000 dark:border-neutral-400`,
+            props.inputWrapperClassName
           )}
-          style={{ borderRadius: inputBorderRadius }}
+          style={{ borderRadius: props.inputBorderRadius }}
         >
-          {isIcon && (
-            <span className={cn('flex h-full items-center justify-center text-2xl text-neutral-500', iconClassName)}>
-              {icon}
+          {props.isIcon && (
+            <span
+              className={cn(
+                'flex h-full items-center justify-center ps-2 text-2xl text-neutral-500',
+                props.iconClassName
+              )}
+            >
+              {props.icon}
             </span>
           )}
-          <input className={inputClassName} disabled={disabled} type={isShowPassword ? 'text' : type} {...props} />
-          {type === 'password' && (
+
+          {isSelect(props) ? (
+            <select className={inputClassName} {...props}>
+              {props.options?.map(option => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <input className={inputClassName} {...props} type={isShowPassword ? 'text' : props.type} />
+          )}
+
+          {props.type === 'password' && (
             <button
-              className={cn('flex h-full items-center justify-center text-2xl text-neutral-500', iconClassName)}
+              className={cn(
+                'flex h-full items-center justify-center pe-2 text-2xl text-neutral-500',
+                props.iconClassName
+              )}
               type="button"
               onClick={() => setIsShowPassword(!isShowPassword)}
             >
@@ -59,9 +84,9 @@ const Input: React.FC<InputProps> = ({
         </div>
       </div>
 
-      {error ? (
+      {props.error ? (
         <div>
-          <p className="text-sm text-red-600">{error}</p>
+          <p className="text-sm text-red-600">{props.error}</p>
         </div>
       ) : (
         ''

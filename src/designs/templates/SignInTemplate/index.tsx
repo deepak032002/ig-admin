@@ -7,7 +7,7 @@ import * as Yup from 'yup'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { useThemeMode } from 'flowbite-react'
+import { useThemeMode, Button } from 'flowbite-react'
 
 import Input from '@/designs/atoms/Input'
 import { useLogin } from '@/hooks/api-hooks/use-login'
@@ -199,6 +199,7 @@ const SignInTemplate: React.FC = () => {
                   </svg>
                 }
                 isIcon
+                layout="vertical"
               />
 
               <Input
@@ -229,16 +230,13 @@ const SignInTemplate: React.FC = () => {
                   </svg>
                 }
                 isIcon
+                layout="vertical"
               />
 
-              <div className="mb-5">
-                <button
-                  className="cursor-pointer rounded-lg border border-primary bg-primary px-4 py-2 text-white transition hover:bg-opacity-90 disabled:bg-opacity-70"
-                  disabled={isPending}
-                  type="submit"
-                >
-                  {isPending ? 'Signing In...' : 'Sign In'}
-                </button>
+              <div className="mt-5">
+                <Button className="relative bg-primary" isProcessing={isPending} type="submit">
+                  Sign in
+                </Button>
               </div>
             </form>
           </div>

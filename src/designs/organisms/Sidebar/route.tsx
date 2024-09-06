@@ -68,6 +68,19 @@ const routeGroups: AppRouteGroup = [
         key: 'users-list',
         isShow: true,
       },
+
+      {
+        title: 'Users Add',
+        path: '/user-add',
+        icon: (
+          <>
+            <SidebarIcon.UserAddIcon />
+          </>
+        ),
+        isHavechild: false,
+        key: 'user-add',
+        isShow: true,
+      },
     ],
   },
 ]
