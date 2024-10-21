@@ -21,17 +21,13 @@ const Input: React.FC<InputProps> = props => {
   return (
     <div className={cn(props.wrapperClassName)}>
       <div
-        className={
-          props.error
-            ? 'mb-1'
-            : cn(
-                'flex',
-                { 'flex-col gap-2': props.layout === 'vertical' },
-                {
-                  'flex-col gap-2 md:flex-row md:items-center': props.layout === 'horizontal',
-                }
-              )
-        }
+        className={cn(
+          'flex',
+          { 'flex-col gap-2': props.layout === 'vertical' },
+          {
+            'flex-col gap-2 md:flex-row md:items-center': props.layout === 'horizontal',
+          }
+        )}
       >
         {props.label && (
           <label className={cn('block flex-1 font-medium text-[#3f2a2a] dark:text-white', props.labelClassName)}>
@@ -85,7 +81,7 @@ const Input: React.FC<InputProps> = props => {
       </div>
 
       {props.error ? (
-        <div>
+        <div className="mt-1">
           <p className="text-sm text-red-600">{props.error}</p>
         </div>
       ) : (

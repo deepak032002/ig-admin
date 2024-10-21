@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useThemeMode, Button } from 'flowbite-react'
+import { AxiosError } from 'axios'
 
 import Input from '@/designs/atoms/Input'
 import { useLogin } from '@/hooks/api-hooks/use-login'
@@ -34,8 +35,10 @@ const SignInTemplate: React.FC = () => {
           router.push('/dashboard')
         },
 
-        onError: () => {
-          toast.error('Failed to login')
+        onError: err => {
+          if (err instanceof AxiosError) {
+            toast.error(err.response?.data?.error)
+          }
         },
       })
     },

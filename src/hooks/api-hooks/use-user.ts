@@ -26,6 +26,6 @@ export const useUserList = (search: string) => {
 
 export const useAdminUserCreate = () => {
   return useMutation({
-    mutationFn: (data: any) => userApiService.createUserByAdmin(data),
+    mutationFn: (data: Partial<UserCreateByAdminPostData>) => userApiService.createUserByAdmin(data),
   })
 }

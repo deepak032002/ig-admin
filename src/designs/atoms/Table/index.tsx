@@ -1,14 +1,11 @@
 'use client'
 
 import React, { useEffect, useState, useCallback } from 'react'
-import { IoSearch } from 'react-icons/io5'
-import { Button } from 'flowbite-react'
-import { HiMiniChevronUpDown, HiMiniChevronUp, HiMiniChevronDown } from 'react-icons/hi2'
-import { IoInformationCircleOutline } from 'react-icons/io5'
 import Link from 'next/link'
-import { Tooltip } from 'flowbite-react'
+import { HiMiniChevronUpDown, HiMiniChevronUp, HiMiniChevronDown } from 'react-icons/hi2'
+import { Button, Tooltip, Dropdown } from 'flowbite-react'
+import { IoInformationCircleOutline, IoSearch } from 'react-icons/io5'
 import { PiPlusCircleBold } from 'react-icons/pi'
-import { Dropdown } from 'flowbite-react'
 
 import Typography from '../Typography'
 import { ScrollTrigger } from '../ScrollTrigger'
@@ -128,17 +125,15 @@ function Table<T>({
           <div className="search flex-1">
             {isSearch && (
               <Input
-                className="rounded-full p-3"
                 icon={<IoSearch />}
                 inputBorderRadius="40px"
-                inputWrapperClassName="h-[44px]"
+                inputWrapperClassName="h-12"
                 isIcon
-                placeholder="Search..."
-                value={search}
-                wrapperClassName="w-full md:w-[300px] mb-0 h-full"
-                onChange={handleChange}
                 layout="horizontal"
+                placeholder="Search..."
                 type="text"
+                value={search}
+                onChange={handleChange}
               />
             )}
           </div>

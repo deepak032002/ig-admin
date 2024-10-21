@@ -10,6 +10,7 @@ import Breadcrumb from '@/designs/atoms/Breadcrumb'
 import Typography from '@/designs/atoms/Typography'
 import Input from '@/designs/atoms/Input'
 import { useAdminUserCreate } from '@/hooks/api-hooks/use-user'
+import { removeEmptyKey } from '@/utils/helper'
 
 const validationSchema = Yup.object({
   email: Yup.string().email('Invalid email address').required('Email is required'),
@@ -28,26 +29,24 @@ const validationSchema = Yup.object({
     city: Yup.string(),
     state: Yup.string(),
     country: Yup.string(),
-    pincode: Yup.string()
-      .matches(/^[0-9]{6}$/, 'Pincode must be exactly 6 digits')
-      .required('Pincode is required'),
+    pincode: Yup.string().matches(/^[0-9]{6}$/, 'Pincode must be exactly 6 digits'),
   }),
 })
 const UserAddTemplate = () => {
   const { isPending: isPendingCreate, mutate: mutateCreate } = useAdminUserCreate()
 
-  const formik = useFormik({
+  const formik = useFormik<UserCreateByAdminPostData>({
     initialValues: {
       email: '',
       password: '',
       confirmPassword: '',
       firstName: '',
       lastName: '',
-      mobile: '',
+      phone: '',
       dob: '',
       gender: '',
       profilePic: '',
-      role: '',
+      role: 'AUTHOR',
       address: {
         city: '',
         state: '',
@@ -58,9 +57,10 @@ const UserAddTemplate = () => {
     validationSchema: validationSchema,
     onSubmit: values => {
       console.info(values)
-      mutateCreate(values, {
+      mutateCreate(removeEmptyKey(values), {
         onSuccess: () => {
           toast.success('Successfully created')
+          formik.resetForm()
         },
         onError: () => {
           toast.error('Failed to create')
@@ -87,82 +87,84 @@ const UserAddTemplate = () => {
 
           <Input
             {...formik.getFieldProps('email')}
+            error={formik.touched.email && formik.errors.email ? formik.errors.email : undefined}
             label="Email"
             layout="horizontal"
             placeholder="Enter email"
-            type="text"
-            error={formik.touched.email && formik.errors.email ? formik.errors.email : undefined}
             required
+            type="text"
           />
 
           <Input
             {...formik.getFieldProps('password')}
+            error={formik.touched.password && formik.errors.password ? formik.errors.password : undefined}
             label="Password"
             layout="horizontal"
             placeholder="Enter password"
-            type="password"
-            error={formik.touched.password && formik.errors.password ? formik.errors.password : undefined}
             required
+            type="password"
           />
 
           <Input
             {...formik.getFieldProps('confirmPassword')}
-            label="Confirm Password"
-            layout="horizontal"
-            placeholder="Enter confirm password"
-            type="password"
             error={
               formik.touched.confirmPassword && formik.errors.confirmPassword
                 ? formik.errors.confirmPassword
                 : undefined
             }
+            label="Confirm Password"
+            layout="horizontal"
+            placeholder="Enter confirm password"
             required
+            type="password"
           />
 
-          <hr className="-mx-6 my-6" />
+          <hr className="-mx-6 my-6 dark:border-strokedark" />
 
           <Typography size="bold-paragraph">Personal Info</Typography>
 
           <Input
             {...formik.getFieldProps('firstName')}
+            error={formik.touched.firstName && formik.errors.firstName ? formik.errors.firstName : undefined}
             label="First Name"
             layout="horizontal"
             placeholder="Enter First Name"
-            type="text"
-            error={formik.touched.firstName && formik.errors.firstName ? formik.errors.firstName : undefined}
             required
+            type="text"
           />
 
           <Input
             {...formik.getFieldProps('lastName')}
+            error={formik.touched.lastName && formik.errors.lastName ? formik.errors.lastName : undefined}
             label="Last Name"
             layout="horizontal"
             placeholder="Enter Last Name"
-            type="text"
-            error={formik.touched.lastName && formik.errors.lastName ? formik.errors.lastName : undefined}
             required
+            type="text"
+          />
+
+          <Input
+            {...formik.getFieldProps('phone')}
+            error={formik.touched.phone && formik.errors.phone ? formik.errors.phone : undefined}
+            label="Mobile"
+            layout="horizontal"
+            placeholder="Enter Mobile no."
+            required
+            type="tel"
           />
 
           <Input
             {...formik.getFieldProps('dob')}
+            error={formik.touched.dob && formik.errors.dob ? formik.errors.dob : undefined}
             label="DOB"
             layout="horizontal"
             placeholder="Enter Date of Birth"
             type="date"
-            error={formik.touched.dob && formik.errors.dob ? formik.errors.dob : undefined}
-          />
-
-          <Input
-            {...formik.getFieldProps('mobile')}
-            label="Mobile"
-            layout="horizontal"
-            placeholder="Enter Mobile no."
-            type="tel"
-            error={formik.touched.mobile && formik.errors.mobile ? formik.errors.mobile : undefined}
           />
 
           <Input
             {...formik.getFieldProps('gender')}
+            error={formik.touched.gender && formik.errors.gender ? formik.errors.gender : undefined}
             label="Gender"
             layout="horizontal"
             options={[
@@ -171,75 +173,74 @@ const UserAddTemplate = () => {
               { value: 'other', label: 'Other' },
             ]}
             type="select"
-            error={formik.touched.gender && formik.errors.gender ? formik.errors.gender : undefined}
           />
 
           <Input
             {...formik.getFieldProps('role')}
+            error={formik.touched.role && formik.errors.role ? formik.errors.role : undefined}
             label="Role"
             layout="horizontal"
             options={[
-              { value: 'admin', label: 'Admin' },
-              { value: 'author', label: 'Author' },
+              { value: 'ADMIN', label: 'Admin' },
+              { value: 'AUTHOR', label: 'Author' },
             ]}
             type="select"
-            error={formik.touched.role && formik.errors.role ? formik.errors.role : undefined}
           />
 
-          <hr className="-mx-6 my-6" />
+          <hr className="-mx-6 my-6 dark:border-strokedark" />
 
           <Typography size="bold-paragraph">Address Details</Typography>
 
           <Input
             {...formik.getFieldProps('city')}
+            error={
+              formik.touched.address?.city && formik.errors.address?.city ? formik.errors.address?.city : undefined
+            }
             label="City"
             layout="horizontal"
             placeholder="Enter city"
             type="text"
-            error={
-              formik.touched.address?.city && formik.errors.address?.city ? formik.errors.address?.city : undefined
-            }
           />
 
           <Input
             {...formik.getFieldProps('address.state')}
+            error={
+              formik.touched.address?.state && formik.errors.address?.state ? formik.errors.address?.state : undefined
+            }
             label="State"
             layout="horizontal"
             placeholder="Enter state"
             type="text"
-            error={
-              formik.touched.address?.state && formik.errors.address?.state ? formik.errors.address?.state : undefined
-            }
           />
 
           <Input
             {...formik.getFieldProps('address.country')}
-            label="Country"
-            layout="horizontal"
-            placeholder="Enter country"
-            type="text"
             error={
               formik.touched.address?.country && formik.errors.address?.country
                 ? formik.errors.address?.country
                 : undefined
             }
+            label="Country"
+            layout="horizontal"
+            placeholder="Enter country"
+            type="text"
           />
 
           <Input
             {...formik.getFieldProps('address.pincode')}
-            label="Pin code"
-            layout="horizontal"
-            placeholder="Enter pin code"
-            type="text"
             error={
               formik.touched.address?.pincode && formik.errors.address?.pincode
                 ? formik.errors.address?.pincode
                 : undefined
             }
+            label="Pin code"
+            layout="horizontal"
+            placeholder="Enter pin code"
+            type="text"
           />
 
           <div>
-            <Button type="submit" className="bg-primary" isProcessing={isPendingCreate}>
+            <Button className="bg-primary" isProcessing={isPendingCreate} type="submit">
               Submit
             </Button>
           </div>

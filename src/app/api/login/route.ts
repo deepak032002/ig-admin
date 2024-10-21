@@ -25,7 +25,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: data.message }, { status: 400 })
     }
 
-    cookies().set('token', data.result.access_token, {
+    cookies().set('token', data.result.accessToken, {
+      maxAge: 60 * 60 * 1 * 24,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+    })
+
+    cookies().set('role', data.result.role, {
       maxAge: 60 * 60 * 1 * 24,
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

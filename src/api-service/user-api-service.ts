@@ -8,17 +8,17 @@ class UserApiService {
   }
 
   getProfile = () => {
-    return coreApiService.get<ApiResponse<UserResponse>>(API_ENDPOINTS.AUTH.PROFILE)
+    return coreApiService.get<ApiResponse<UserResponse>>(API_ENDPOINTS.USER.PROFILE)
   }
 
   getUserListForAdmin = (query: QueryType) => {
     return coreApiService.get<ApiResponse<{ total: number; users: UserResponse[] }>>(
-      `${API_ENDPOINTS.AUTH.USER_LIST_ADMIN}?${getQueries(query)}`
+      `${API_ENDPOINTS.USER.LIST_ADMIN}?${getQueries(query)}`
     )
   }
 
-  createUserByAdmin = (data: any) => {
-    return coreApiService.post(API_ENDPOINTS.AUTH.USER_LIST_ADMIN, data)
+  createUserByAdmin = (data: Partial<UserCreateByAdminPostData>) => {
+    return coreApiService.post(API_ENDPOINTS.USER.CREATE_ADMIN, data)
   }
 }
 

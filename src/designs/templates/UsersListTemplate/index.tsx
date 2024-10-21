@@ -62,6 +62,13 @@ const UsersListTemplate: React.FC = () => {
             align: 'center',
             selector: item => item.phone,
           },
+
+          {
+            name: 'Role',
+            align: 'center',
+            selector: item => item.role,
+          },
+
           {
             name: 'Action',
             align: 'center',
@@ -73,7 +80,7 @@ const UsersListTemplate: React.FC = () => {
           },
         ]}
         data={users?.map(item => item.result.users).flat() || []}
-        href={item => `/user-list/${item.id}`}
+        href={item => `/users-list/${item.id}`}
         isLink
         isLoading={isLoading}
         isSearch

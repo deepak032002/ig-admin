@@ -11,9 +11,19 @@ export default async function middleware(req: NextRequest) {
     .map(item => item.path)
   const isProtectedRoute = protectedRoutes.includes(path)
   const cookie = cookies().get('token')
+  const role = cookies().get('role')
 
-  if (!cookie && isProtectedRoute) {
+  const activeRoute = routeGroups
+    .map(item => item.routes)
+    .flat()
+    .find(item => item.path.includes(path))
+
+  if (isProtectedRoute && !cookie) {
     return NextResponse.redirect(new URL('/signin', req.url))
+  }
+
+  if (isProtectedRoute && !activeRoute?.accessBy?.includes(role?.value || '')) {
+    return NextResponse.redirect(new URL('/dashboard', req.url))
   }
 
   if (path === '/') {

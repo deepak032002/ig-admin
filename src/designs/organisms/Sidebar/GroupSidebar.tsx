@@ -7,6 +7,7 @@ import Image from 'next/image'
 import routeGroups from './route'
 
 import useWindowDimensions from '@/hooks/useWindowDimensions'
+import { useGlobalStore } from '@/store/useGlobalStore'
 
 interface SidebarProps {
   sidebarOpen: boolean
@@ -18,6 +19,7 @@ interface SidebarProps {
 
 const GroupSidebar: React.FC<SidebarProps> = ({ activeGroup, sidebarOpen, handleRouteGroupClick, trigger }) => {
   const { width } = useWindowDimensions()
+  const user = useGlobalStore(state => state.user)
 
   return (
     <div
@@ -33,20 +35,24 @@ const GroupSidebar: React.FC<SidebarProps> = ({ activeGroup, sidebarOpen, handle
 
       <ul className="flex flex-col items-center gap-y-2">
         {routeGroups.map(group => {
-          return (
-            <Tooltip className="whitespace-nowrap" content={group.group} key={group.id} placement="right">
-              <li
-                className={`cursor-pointer rounded-xl p-3 ${
-                  activeGroup === group.id
-                    ? 'active-group-sidebar'
-                    : 'hover:bg-blue-100 hover:text-primary dark:hover:bg-blue-900'
-                }`}
-                onClick={() => handleRouteGroupClick(group.id)}
-              >
-                {group.icon}
-              </li>
-            </Tooltip>
-          )
+          if (group.routes.some(route => route.accessBy.includes(user?.role || ''))) {
+            return (
+              <Tooltip className="whitespace-nowrap" content={group.group} key={group.id} placement="right">
+                <li
+                  className={`cursor-pointer rounded-xl p-3 ${
+                    activeGroup === group.id
+                      ? 'active-group-sidebar'
+                      : 'hover:bg-blue-100 hover:text-primary dark:hover:bg-blue-900'
+                  }`}
+                  onClick={() => handleRouteGroupClick(group.id)}
+                >
+                  {group.icon}
+                </li>
+              </Tooltip>
+            )
+          } else {
+            return null
+          }
         })}
       </ul>
     </div>
